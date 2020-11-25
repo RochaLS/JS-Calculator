@@ -40,7 +40,6 @@ function operate(n1, n2, operator) {
             tmpValue = divide(n1, n2);
             break;
         default:
-            console.log('invalid operator');
             break;
     }
 }
@@ -82,7 +81,6 @@ function setupCalculator() {
 
 
 function displayValue(value) {
-    console.log(value)
     resultField.textContent = value;
 }
 
