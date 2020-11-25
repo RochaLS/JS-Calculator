@@ -50,7 +50,7 @@ function setupCalculator() {
    buttons.forEach(button => {
        if (!isNaN(button.textContent)) {
            button.addEventListener('click', () => {
-                 let value = button.textContent;
+                let value = button.textContent;
                 if (replaceField) {
                     tmpValue = Number(value);
                      displayValue(value);
