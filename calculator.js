@@ -23,7 +23,6 @@ function divide(n1, n2) {
 }
 
 function operate(n1, n2, operator) {
-    console.log(n1, n2)
     switch (operator) {
         case undefined:
             break;
