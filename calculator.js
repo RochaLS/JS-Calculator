@@ -1,7 +1,10 @@
-let resultField = document.querySelector('.result-field')
+const resultField = document.querySelector('.result-field');
+const clearButton = document.querySelector('reset');
 let tmpValue;
+let tmpValue2;
 let tmpOperator;
 let optCounter = 0;
+let replaceField = true;
 
 function add (n1, n2) {
 	return n1 + n2;
@@ -20,7 +23,10 @@ function divide(n1, n2) {
 }
 
 function operate(n1, n2, operator) {
+    console.log(n1, n2)
     switch (operator) {
+        case undefined:
+            break;
         case '+':
             tmpValue = add(n1, n2);
             break;
@@ -37,8 +43,6 @@ function operate(n1, n2, operator) {
             console.log('invalid operator');
             break;
     }
-
-    tmpOperator = undefined;
 }
 
 function setupCalculator() {
@@ -46,38 +50,50 @@ function setupCalculator() {
    buttons.forEach(button => {
        if (!isNaN(button.textContent)) {
            button.addEventListener('click', () => {
-               if (tmpOperator !== undefined) {
-                   displayValue(button.textContent)
-                   operate(tmpValue, Number(button.textContent), tmpOperator)
-               } else {
-                   let value = button.textContent;
-                   if (resultField.textContent === '0') {
-                        displayValue(value)
-                   }
-                    else {
-                       let processedValue = resultField.textContent.concat(value)
-                        tmpValue = Number(processedValue);
-                        displayValue(processedValue)
-                   }
-               }
+                 let value = button.textContent;
+                if (replaceField) {
+                    tmpValue = Number(value);
+                     displayValue(value);
+                    replaceField = false;
+                 } else {
+                    let processedValue = resultField.textContent.concat(value);
+                    tmpValue = Number(processedValue);
+                    displayValue(processedValue);
+                }
+                operate(tmpValue2, tmpValue, tmpOperator);
            });
        } else {
            button.addEventListener('click', () => {
-               if ((button.textContent == '=') || (button.textContent != '=' && optCounter > 0)) {
+               if (button.textContent == 'AC') {
+                   clear();
+               } else if ((button.textContent == '=') || (button.textContent == '=' && optCounter > 0)) {
                    tmpOperator = button.textContent;
                    displayValue(tmpValue);
                } else {
                    tmpOperator = button.textContent;
                    optCounter++;
+                   tmpValue2 = tmpValue;
                }
+               replaceField = true;
            });
        }
    });
 }
 
+
 function displayValue(value) {
     console.log(value)
     resultField.textContent = value;
 }
+
+function clear() {
+    tmpValue = undefined;
+    tmpValue2 = undefined;
+    tmpOperator = undefined;
+    optCounter = 0;
+    replaceField = true;
+    resultField.textContent = '0';
+}
+
 
 setupCalculator()
