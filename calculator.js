@@ -19,6 +19,11 @@ function multiply (n1, n2) {
 }
 
 function divide(n1, n2) {
+    console.log('here');
+    if (n2 == 0) {
+        resultField.textContent = 'ERROR'
+        return
+    }
     return n1 / n2
 }
 
